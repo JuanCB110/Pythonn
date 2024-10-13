@@ -1,0 +1,15 @@
+//Declaramos variables
+
+int x;
+int y;
+int z;
+
+//Inicializamos
+
+x = 10;
+
+y = 8;
+
+//Calculamos
+
+	z = x + y;
