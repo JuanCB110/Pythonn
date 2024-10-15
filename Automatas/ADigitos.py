@@ -17,8 +17,8 @@ def validar_cadena_digitos(cadena: str) -> bool:
     return estado == 0  # Acepta si está en el estado 0 al finalizar
 
 # Ejemplo de uso
-cadena = "6688826658"
-if validar_cadena_digitos(cadena):
-    print("La cadena es valida y solo contiene digitos.")
-else:
-    print("La cadena no es valida, tiene otros caracteres.")
+# cadena = "6688826658"
+# if validar_cadena_digitos(cadena):
+#     print("La cadena es valida y solo contiene digitos.")
+# else:
+#     print("La cadena no es valida, tiene otros caracteres.")

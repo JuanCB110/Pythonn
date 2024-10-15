@@ -100,6 +100,6 @@ def RecorrerArchivo(ruta):
         print("Ocurrio un error al intentar leer el archivo.")
 
 #Main padrino
-PreprocesarArchivo('C:\\Python\\miprograma.txt', 'C:\\Python\\nuevotexto.txt')
-ruta = 'C:\\Python\\miprograma.txt'
-RecorrerArchivo(ruta)
+# PreprocesarArchivo('C:\\Pythonn\\miprograma.txt', 'C:\\Pythonn\\nuevotexto.txt')
+# ruta = 'C:\\Pythonn\\miprograma.txt'
+# RecorrerArchivo(ruta)

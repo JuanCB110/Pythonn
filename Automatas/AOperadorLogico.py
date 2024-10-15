@@ -27,8 +27,8 @@ def validar_operador_logico(cadena: str) -> bool:
     return estado in {2, 4, 5}  # Acepta si termina en un estado de aceptación (&&, ||, !)
 
 # Ejemplo de uso
-cadena = "||"
-if validar_operador_logico(cadena):
-    print("La cadena es valida.")
-else:
-    print("La cadena no es valida.")
+# cadena = "||"
+# if validar_operador_logico(cadena):
+#     print("La cadena es valida.")
+# else:
+#     print("La cadena no es valida.")

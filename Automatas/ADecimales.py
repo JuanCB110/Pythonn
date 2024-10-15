@@ -29,12 +29,20 @@ def validar_numero_decimal(cadena: str) -> bool:
     return estado == 2 or estado == 4
 
 # Ejemplo de uso
-print(validar_numero_decimal("123.45"))    # True
-print(validar_numero_decimal("-123.45"))   # True
-print(validar_numero_decimal("0.123"))     # True
-print(validar_numero_decimal("123."))      # True
-print(validar_numero_decimal(".456"))      # True
-print(validar_numero_decimal("123"))       # True
-print(validar_numero_decimal("-"))         # False
-print(validar_numero_decimal("12a.34"))    # False
-print(validar_numero_decimal("-12.a34"))   # False
+
+# Ejemplo de uso
+# cadena = "falso"
+# if validar_numero_decimal(cadena):
+#     print("La cadena es valida.")
+# else:
+#     print("La cadena no es valida.")
+
+# print(validar_numero_decimal("123.45"))    # True
+# print(validar_numero_decimal("-123.45"))   # True
+# print(validar_numero_decimal("0.123"))     # True
+# print(validar_numero_decimal("123."))      # True
+# print(validar_numero_decimal(".456"))      # True
+# print(validar_numero_decimal("123"))       # True
+# print(validar_numero_decimal("-"))         # False
+# print(validar_numero_decimal("12a.34"))    # False
+# print(validar_numero_decimal("-12.a34"))   # False

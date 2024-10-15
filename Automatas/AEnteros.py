@@ -24,11 +24,11 @@ def validar_numero_entero(cadena: str) -> bool:
 # Ejemplo de uso
 
 # Ejemplo de uso
-cadena = "-12"
-if validar_numero_entero(cadena):
-    print("La cadena es valida.")
-else:
-    print("La cadena no es valida.")
+# cadena = "-12"
+# if validar_numero_entero(cadena):
+#     print("La cadena es valida.")
+# else:
+#     print("La cadena no es valida.")
 
 # print(validar_numero_entero("123"))    # True
 # print(validar_numero_entero("-456"))   # True

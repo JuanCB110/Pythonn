@@ -1,8 +1,8 @@
 //Declaramos variables
 
-int x;
-int y;
-int z;
+int @x;
+int @y;
+int @z;
 
 //Inicializamos
 

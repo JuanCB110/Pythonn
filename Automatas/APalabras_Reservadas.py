@@ -18,11 +18,11 @@ def validar_palabra_reservada(cadena: str) -> bool:
         return False
 
 # Ejemplo de uso
-cadena = "falso"
-if validar_palabra_reservada(cadena):
-    print("La cadena es valida.")
-else:
-    print("La cadena no es valida.")
+# cadena = "falso"
+# if validar_palabra_reservada(cadena):
+#     print("La cadena es valida.")
+# else:
+#     print("La cadena no es valida.")
 
 # print(validar_palabra_reservada("algoritmo"))       # True
 # print(validar_palabra_reservada("FIN_ALGORITMO"))   # True

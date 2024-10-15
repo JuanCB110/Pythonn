@@ -29,7 +29,7 @@ def validar_variable(variable:str):
 
     return False
 
-if validar_variable("@z___"):
+if validar_variable("@z"):
     print("variable valida")
 else:
     print("variable no valida")
