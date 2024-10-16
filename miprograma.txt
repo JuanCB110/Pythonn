@@ -6,10 +6,10 @@ int @z;
 
 //Inicializamos
 
-x = 10;
+@x = 10;
 
-y = 8;
+@y = 8;
 
 //Calculamos
 
-	z = x + y;
+	@z = @x + @y;

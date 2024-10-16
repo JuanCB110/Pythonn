@@ -93,7 +93,7 @@ def RecorrerArchivo(ruta):
                 if not caracter:
                     break
                 #Imprimir el caracter
-                print(caracter, end ='')
+                # print(caracter, end ='')
     except FileNotFoundError:
         print(f"El archivo {ruta} no fue encontrado.")
     except IOError:

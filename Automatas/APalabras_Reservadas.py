@@ -4,7 +4,7 @@ palabras_reservadas = [
     "CONST", "DIMENSION", "SUBRANGO", "LEER", "ESCRIBIR", "SI", "ENTONCES", "SINO", "FIN_SI",
     "SEGUN", "HACER", "FIN_SEGUN", "MIENTRAS", "FIN_MIENTRAS", "REPETIR", "HASTA", "PARA", 
     "FIN_PARA", "FUNCION", "FIN_FUNCION", "PROCEDIMIENTO", "FIN_PROCEDIMIENTO", "RETORNAR", 
-    "MOD", "NO", "Y", "O", "VERDADERO", "FALSO", "DE", "INICIO", "FIN"
+    "MOD", "NO", "AND", "OR", "VERDADERO", "FALSO", "DE", "INICIO", "FIN"
 ]
 
 def validar_palabra_reservada(cadena: str) -> bool:

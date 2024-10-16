@@ -1,0 +1,17 @@
+Token: 1, Nombre: int, Tipo: Palabra Reservada
+Token: 2, Nombre: @x, Tipo: Variable
+Token: 5, Nombre: int, Tipo: Palabra Reservada
+Token: 6, Nombre: @y, Tipo: Variable
+Token: 9, Nombre: int, Tipo: Palabra Reservada
+Token: 10, Nombre: @z, Tipo: Variable
+Token: 13, Nombre: @x, Tipo: Variable
+Token: 14, Nombre: =, Tipo: Asignacion
+Token: 15, Nombre: 10, Tipo: Numero Entero
+Token: 18, Nombre: @y, Tipo: Variable
+Token: 19, Nombre: =, Tipo: Asignacion
+Token: 20, Nombre: 8, Tipo: Numero Entero
+Token: 23, Nombre: @z, Tipo: Variable
+Token: 24, Nombre: =, Tipo: Asignacion
+Token: 25, Nombre: @x, Tipo: Variable
+Token: 26, Nombre: +, Tipo: Aritmetico
+Token: 27, Nombre: @y, Tipo: Variable
