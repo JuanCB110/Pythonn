@@ -1,5 +1,4 @@
 #Tarea 1-Desarrollo de Funciones
-#import re #(Expresiones regulares)->Funcion para borrar espacios especificos
 #Funcion para eliminar  Espacios en Blanco, Líneas Vacías, Comentarios, Tabuladores
 def PreprocesarArchivo(ruta1,ruta2):
     try:
@@ -17,16 +16,6 @@ def PreprocesarArchivo(ruta1,ruta2):
 
                 #eliminar tab
                 linea = linea.replace('\t', '')
-
-                # Eliminar espacios innecesarios en asignaciones y expresiones
-                #linea = re.sub(r'\s*=\s*', '=', linea)  # Eliminar espacios alrededor del "="
-                #linea = re.sub(r'\s*\+\s*', '+', linea)  # Eliminar espacios alrededor del "+"
-                #linea = re.sub(r'\s*-\s*', '-', linea)  # Eliminar espacios alrededor del "-"
-                #linea = re.sub(r'\s*/\s*', '/', linea)  # Eliminar espacios alrededor del "/"
-                #linea = re.sub(r'\s*\*\s*', '*', linea)  # Eliminar espacios alrededor del "*"
-                #linea = re.sub(r'\s*\(\s*', '(', linea)  # Eliminar espacios después de "("
-                #linea = re.sub(r'\s*\)\s*', ')', linea)  # Eliminar espacios antes de ")"
-                #linea = re.sub(r'\s*;\s*', ';', linea)  # Eliminar espacios antes de ";"
 
                 # Eliminar espacios alrededor de operadores "="
                 if '=' in linea:
