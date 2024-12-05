@@ -59,6 +59,7 @@ def PreprocesarArchivo(ruta1,ruta2):
 
                 #Agregar la linea procesada a la lista
                 lineas_procesadas.append(linea)
+                print(linea)
 
         #Abrir el archivo de salida para escritura
         with open(ruta2, 'w') as archivo_salida:

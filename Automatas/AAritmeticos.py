@@ -1,5 +1,5 @@
 def validar_operador_aritmetico(operador):
-    operadores_aritmeticos = ['+', '-', '*', '/', '%']
+    operadores_aritmeticos = ['+', '-', '*', '/', '%', '(', ')']
     
     if operador in operadores_aritmeticos:
         return True
