@@ -1,8 +1,10 @@
 int @x;
 int @y;
 int @z;
+int @a;
 @x=10;
 @y=8;
+@a=123;
 @z=12(234(23(23)))
 @z=@x+@y;
 Tokens Analizados:
@@ -12,29 +14,29 @@ Token 5: int, Tipo: Palabra Reservada
 Token 6: @y, Tipo: Variable
 Token 9: int, Tipo: Palabra Reservada
 Token 10: @z, Tipo: Variable
-Token 13: @x, Tipo: Variable
-Token 14: =, Tipo: Asignación
-Token 15: 10, Tipo: Número Entero
-Token 18: @y, Tipo: Variable
-Token 19: =, Tipo: Asignación
-Token 20: 8, Tipo: Número Entero
-Token 23: @z, Tipo: Variable
-Token 24: =, Tipo: Asignación
-Token 25: 12, Tipo: Número Entero
-Token 26: (, Tipo: Aritmético
-Token 27: 234, Tipo: Número Entero
-Token 28: (, Tipo: Aritmético
-Token 29: 23, Tipo: Número Entero
-Token 30: (, Tipo: Aritmético
-Token 31: 23, Tipo: Número Entero
-Token 32: ), Tipo: Aritmético
-Token 33: ), Tipo: Aritmético
-Token 34: ), Tipo: Aritmético
-Token 36: @z, Tipo: Variable
-Token 37: =, Tipo: Asignación
-Token 38: @x+@y, Tipo: Desconocido
-
-Tabla de Símbolos:
-@x: {'tipo': 'Variable', 'valor': None}
-@y: {'tipo': 'Variable', 'valor': None}
-@z: {'tipo': 'Variable', 'valor': None}
+Token 13: int, Tipo: Palabra Reservada
+Token 14: @a, Tipo: Variable
+Token 17: @x, Tipo: Variable
+Token 18: =, Tipo: Asignación
+Token 19: 10, Tipo: Número Entero
+Token 22: @y, Tipo: Variable
+Token 23: =, Tipo: Asignación
+Token 24: 8, Tipo: Número Entero
+Token 27: @a, Tipo: Variable
+Token 28: =, Tipo: Asignación
+Token 29: 123, Tipo: Número Entero
+Token 32: @z, Tipo: Variable
+Token 33: =, Tipo: Asignación
+Token 34: 12, Tipo: Número Entero
+Token 35: (, Tipo: Aritmético
+Token 36: 234, Tipo: Número Entero
+Token 37: (, Tipo: Aritmético
+Token 38: 23, Tipo: Número Entero
+Token 39: (, Tipo: Aritmético
+Token 40: 23, Tipo: Número Entero
+Token 41: ), Tipo: Aritmético
+Token 42: ), Tipo: Aritmético
+Token 43: ), Tipo: Aritmético
+Token 45: @z, Tipo: Variable
+Token 46: =, Tipo: Asignación
+Token 47: @x+@y, Tipo: Desconocido
