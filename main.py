@@ -7,6 +7,9 @@ from Automatas.AAsignacion import validar_operador_asignacion
 from Automatas.AAritmeticos import validar_operador_aritmetico
 from Tarea1 import PreprocesarArchivo, RecorrerArchivo
 import sys
+import os
+__all__ = ['analizar_codigo']
+from analizador_sintactico import AnalizadorSintactico
 
 # Delimitadores definidos dinámicamente
 DELIMITADORES = {'(': 'Paréntesis Izquierdo', ')': 'Paréntesis Derecho',
@@ -47,12 +50,12 @@ def separar_tokens(linea):
 # Diccionario de validadores
 VALIDADORES = {
     'Palabra Reservada': validar_palabra_reservada,
-    'Número Entero': validar_numero_entero,
-    'Número Decimal': validar_numero_decimal,
-    'Operador Lógico': validar_operador_logico,
+    'Numero Entero': validar_numero_entero,
+    'Numero Decimal': validar_numero_decimal,
+    'Operador Logico': validar_operador_logico,
     'Variable': validar_variable,
-    'Asignación': validar_operador_asignacion,
-    'Aritmético': validar_operador_aritmetico
+    'Asignacion': validar_operador_asignacion,
+    'Aritmetico': validar_operador_aritmetico
 }
 
 # Función para analizar el código
@@ -83,15 +86,12 @@ def main():
     """
     Función principal: Preprocesa el archivo, analiza el código, y genera tokens clasificados.
     """
-    # Redirige la salida estándar a un archivo
-    sys.stdout = open('output.txt', 'w')
-
-    # Preprocesamos el archivo
-    ruta_original = 'C:\\Pythonn\\miprograma.txt'
-    ruta_preprocesada = 'C:\\Pythonn\\codigo.txt'
+    # Preprocesamos el archivo y lo guardamos en codigo.txt
+    ruta_original = 'C:\\Users\\Omarius\\Desktop\\CUMBACK\\Pythonn\\miprograma.txt'
+    ruta_preprocesada = 'C:\\Users\\Omarius\\Desktop\\CUMBACK\\Pythonn\\codigo.txt'
 
     PreprocesarArchivo(ruta_original, ruta_preprocesada)
-    RecorrerArchivo(ruta_preprocesada)
+    RecorrerArchivo(ruta_preprocesada)  # Esto guarda en codigo.txt
 
     # Leemos el archivo preprocesado
     with open(ruta_preprocesada, 'r') as archivo:
@@ -99,14 +99,30 @@ def main():
 
     # Analizamos el código
     tokens = analizar_codigo(codigo)
+    
+    # Guardamos solo tokens y análisis sintáctico en output.txt
+    with open('output.txt', 'w') as archivo_salida:
+        sys.stdout = archivo_salida
+        
+        print("Tokens Analizados:")
+        cont = 0
+        for token, tipo in tokens:
+            cont += 1
+            if token not in ["\n", ";"]:
+                print(f"Token {cont}: {token}, Tipo: {tipo}")
 
-    # Mostramos los tokens en la salida
-    print("Tokens Analizados:")
-    cont = 0
-    for token, tipo in tokens:
-        cont += 1
-        if token not in ["\n", ";"]:
-            print(f"Token {cont}: {token}, Tipo: {tipo}")
+        print("\nAnalisis Sintactico:")
+        analizador = AnalizadorSintactico(tokens)
+        arboles = analizador.analizar()
+        
+        for i, arbol in enumerate(arboles, 1):
+            print(f"\nArbol {i}:")
+            arbol.mostrar()
+
+    # Restauramos la salida estándar
+    sys.stdout = sys.__stdout__
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == "__main__":
     main()
+    os.system('cls' if os.name == 'nt' else 'clear')
