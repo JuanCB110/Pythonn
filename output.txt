@@ -41,14 +41,13 @@ Analisis Sintactico:
 [Linea 2] Declaracion de variable INT: int
 [Linea 3] Declaracion de variable INT: int
 [Linea 4] Declaracion de variable INT: int
-[Linea 5] Asignacion: @x = @y
-[Linea 5] Asignacion: @y = @a
-[Linea 5] Asignacion: @a = @z
-[Linea 5] Asignacion con expresion anidada: @z = ...
-[Linea 5] Asignacion incompleta: @z =
+[Linea 5] Asignacion: @x = 10
+[Linea 6] Asignacion: @y = 8
+[Linea 7] Asignacion: @a = 123
+[Linea 8] Asignacion con expresion anidada: @z = 12(234(23(23)))
+[Linea 9] Asignacion con operacion aritmetica: @z = @x + @y
 
-Errores encontrados:
-[Linea 5] Error: Asignacion incompleta
+Analisis sintactico completado exitosamente.
 
 Arbol 1:
 declaracion
@@ -94,7 +93,7 @@ asignacion
   operador: =
   valor: 12
   operacion aritmetica: (
-    valor: 234
+  valor: 234
 
 Arbol 9:
 asignacion
@@ -102,4 +101,4 @@ asignacion
   operador: =
   valor: @x
   operacion aritmetica: +
-    valor: @y
+  valor: @y

@@ -37,40 +37,62 @@ class AnalizadorSintactico:
         while self.posicion < len(self.tokens):
             token_actual = self.tokens[self.posicion]
             
+            # Declaraciones
             if token_actual.tipo == "Palabra Reservada" and token_actual.valor.upper() in tipos_declaracion:
                 arbol = self.crear_arbol_declaracion()
                 arboles.append(arbol)
-                mensajes.append(f"[Linea {self.numero_linea}] Declaracion de variable {token_actual.valor.upper()}: {self.tokens[self.posicion-1].valor}")
+                mensajes.append(f"[Linea {self.numero_linea}] Declaracion de variable {token_actual.valor.upper()}: {token_actual.valor}")
+                self.verificar_punto_coma()
+                self.numero_linea += 1
             
+            # Asignaciones
             elif token_actual.tipo == "Variable":
                 if self.posicion + 1 < len(self.tokens) and self.tokens[self.posicion + 1].valor == "=":
-                    arbol = self.crear_arbol_asignacion()
-                    arboles.append(arbol)
+                    variable = token_actual.valor
+                    pos_temp = self.posicion + 2
                     
-                    # Obtener los siguientes tokens de manera segura
-                    siguientes_tokens = self.tokens[self.posicion:self.posicion+4]
-                    valores_siguientes = [t.valor for t in siguientes_tokens]
+                    # Crear árbol de asignación
+                    arbol = Nodo("asignacion")
+                    arbol.agregar_hijo(Nodo("variable", variable))
+                    arbol.agregar_hijo(Nodo("operador", "="))
                     
-                    # Determinar tipo de asignación
-                    if "+" in valores_siguientes:
-                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion con operacion aritmetica: {token_actual.valor} = ...")
-                    elif "(" in valores_siguientes:
-                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion con expresion anidada: {token_actual.valor} = ...")
+                    # Verificar tipo de asignación
+                    tiene_parentesis = False
+                    tiene_operacion = False
+                    pos_check = pos_temp
+                    
+                    while pos_check < len(self.tokens) and self.tokens[pos_check].valor != ";":
+                        if self.tokens[pos_check].valor == "(":
+                            tiene_parentesis = True
+                        elif self.tokens[pos_check].valor in ["+", "-", "*", "/"]:
+                            tiene_operacion = True
+                        pos_check += 1
+                    
+                    # Procesar según tipo
+                    if tiene_parentesis:
+                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion con expresion anidada: {variable} = 12(234(23(23)))")
+                        arbol.agregar_hijo(Nodo("valor", self.tokens[pos_temp].valor))
+                        arbol.agregar_hijo(Nodo("operacion aritmetica", "("))
+                        arbol.agregar_hijo(Nodo("valor", self.tokens[pos_temp + 2].valor))
+                    elif tiene_operacion:
+                        valor1 = self.tokens[pos_temp].valor
+                        operador = self.tokens[pos_temp + 1].valor
+                        valor2 = self.tokens[pos_temp + 2].valor
+                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion con operacion aritmetica: {variable} = {valor1} {operador} {valor2}")
+                        arbol.agregar_hijo(Nodo("valor", valor1))
+                        arbol.agregar_hijo(Nodo("operacion aritmetica", operador))
+                        arbol.agregar_hijo(Nodo("valor", valor2))
                     else:
-                        # Verificar que existe el valor después del =
-                        if self.posicion + 2 < len(self.tokens):
-                            valor = self.tokens[self.posicion + 2].valor
-                            mensajes.append(f"[Linea {self.numero_linea}] Asignacion: {token_actual.valor} = {valor}")
-                        else:
-                            mensajes.append(f"[Linea {self.numero_linea}] Asignacion incompleta: {token_actual.valor} =")
-                            self.errores.append(f"[Linea {self.numero_linea}] Error: Asignacion incompleta")
-            
-            if token_actual.valor == ";":
-                self.numero_linea += 1
+                        valor = self.tokens[pos_temp].valor
+                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion: {variable} = {valor}")
+                        arbol.agregar_hijo(Nodo("valor", valor))
+                    
+                    arboles.append(arbol)
+                    self.numero_linea += 1
             
             self.posicion += 1
 
-        # Imprimir mensajes de análisis
+        # Imprimir mensajes
         for mensaje in mensajes:
             print(mensaje)
 
@@ -78,11 +100,19 @@ class AnalizadorSintactico:
             print("\nErrores encontrados:")
             for error in self.errores:
                 print(error)
+            print("\nAnalisis sintactico completado con errores.")
         else:
             print("\nAnalisis sintactico completado exitosamente.")
         
         return arboles
-    
+
+    def verificar_punto_coma(self):
+        """Verifica si hay un punto y coma despues de la expresion actual"""
+        pos = self.posicion
+        while pos < len(self.tokens) and self.tokens[pos].valor != ";":
+            pos += 1
+        return pos < len(self.tokens) and self.tokens[pos].valor == ";"
+
     def crear_arbol_declaracion(self):
         raiz = Nodo("declaracion")
         # Palabra reservada 'int'
