@@ -1,5 +1,5 @@
 Tokens Analizados:
-Token 1: real, Tipo: Palabra Reservada
+Token 1: int, Tipo: Palabra Reservada
 Token 2: @x, Tipo: Variable
 Token 5: int, Tipo: Palabra Reservada
 Token 6: @y, Tipo: Variable
@@ -37,7 +37,7 @@ Token 49: @y, Tipo: Variable
 Analisis Sintactico:
 === ANALISIS SINTACTICO ===
 
-[Linea 1] Declaracion de variable REAL: real
+[Linea 1] Declaracion de variable INT: int
 [Linea 2] Declaracion de variable INT: int
 [Linea 3] Declaracion de variable INT: int
 [Linea 4] Declaracion de variable INT: int
@@ -47,11 +47,15 @@ Analisis Sintactico:
 [Linea 8] Asignacion con expresion anidada: @z = 12(234(23(23)))
 [Linea 9] Asignacion con operacion aritmetica: @z = @x + @y
 
-Analisis sintactico completado exitosamente.
+Errores encontrados:
+[Linea 8] Error: Falta punto y coma al final de la linea
+[Linea 8] Error: Falta punto y coma al final de la expresion anidada
+
+Analisis sintactico completado con errores.
 
 Arbol 1:
 declaracion
-  tipo: real
+  tipo: int
   variable: @x
 
 Arbol 2:

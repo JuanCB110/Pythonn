@@ -74,6 +74,8 @@ class AnalizadorSintactico:
                         arbol.agregar_hijo(Nodo("valor", self.tokens[pos_temp].valor))
                         arbol.agregar_hijo(Nodo("operacion aritmetica", "("))
                         arbol.agregar_hijo(Nodo("valor", self.tokens[pos_temp + 2].valor))
+                        if not self.verificar_punto_coma():
+                            self.errores.append(f"[Linea {self.numero_linea}] Error: Falta punto y coma al final de la expresion anidada")
                     elif tiene_operacion:
                         valor1 = self.tokens[pos_temp].valor
                         operador = self.tokens[pos_temp + 1].valor
@@ -107,11 +109,17 @@ class AnalizadorSintactico:
         return arboles
 
     def verificar_punto_coma(self):
-        """Verifica si hay un punto y coma despues de la expresion actual"""
+        """Verifica si hay un punto y coma después de la expresión actual"""
         pos = self.posicion
-        while pos < len(self.tokens) and self.tokens[pos].valor != ";":
+        # Avanzar hasta encontrar el final de la expresión
+        while pos < len(self.tokens) and self.tokens[pos].valor not in [";", "\n"]:
             pos += 1
-        return pos < len(self.tokens) and self.tokens[pos].valor == ";"
+        
+        # Verificar si encontramos un punto y coma
+        if pos >= len(self.tokens) or self.tokens[pos].valor != ";":
+            self.errores.append(f"[Linea {self.numero_linea}] Error: Falta punto y coma al final de la linea")
+            return False
+        return True
 
     def crear_arbol_declaracion(self):
         raiz = Nodo("declaracion")

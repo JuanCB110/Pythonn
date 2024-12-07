@@ -76,12 +76,15 @@ def analizar_codigo(codigo):
     for linea in codigo:
         palabras = separar_tokens(linea)
         for palabra in palabras:
-            for tipo, validador in VALIDADORES.items():
-                if validador(palabra):
-                    tokens.append((palabra, tipo))
-                    break
+            if palabra == ";":
+                tokens.append((palabra, "Punto y Coma"))
             else:
-                tokens.append((palabra, 'Desconocido'))
+                for tipo, validador in VALIDADORES.items():
+                    if validador(palabra):
+                        tokens.append((palabra, tipo))
+                        break
+                else:
+                    tokens.append((palabra, 'Desconocido'))
     return tokens
 
 # Función principal
@@ -112,6 +115,7 @@ def main():
         for token, tipo in tokens:
             cont += 1
             if token not in ["\n", ";"]:
+            #if token != "\n":
                 print(f"Token {cont}: {token}, Tipo: {tipo}")
 
         print("\nAnalisis Sintactico:")
