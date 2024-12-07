@@ -1,6 +1,6 @@
 //Declaramos variables
 
-int @x;
+real @x;
 int @y;
 int @z;
 int @a;

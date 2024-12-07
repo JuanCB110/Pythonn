@@ -29,8 +29,11 @@ def separar_tokens(linea):
     tokens = []
     token = ""
 
+    # Agregamos los operadores aritméticos a los delimitadores
+    delimitadores = list(DELIMITADORES.keys()) + ['+', '-', '*', '/', '%']
+
     for caracter in linea:
-        if caracter in DELIMITADORES.keys():  # Detecta delimitadores dinámicamente
+        if caracter in delimitadores:  # Detecta delimitadores dinámicamente
             if token:
                 tokens.append(token)
                 token = ""
