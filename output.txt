@@ -1,108 +1,76 @@
-Tokens Analizados:
-Token 1: int, Tipo: Palabra Reservada
-Token 2: @x, Tipo: Variable
-Token 5: int, Tipo: Palabra Reservada
-Token 6: @y, Tipo: Variable
-Token 9: int, Tipo: Palabra Reservada
-Token 10: @z, Tipo: Variable
-Token 13: int, Tipo: Palabra Reservada
-Token 14: @a, Tipo: Variable
-Token 17: @x, Tipo: Variable
-Token 18: =, Tipo: Asignacion
-Token 19: 10, Tipo: Numero Entero
-Token 22: @y, Tipo: Variable
-Token 23: =, Tipo: Asignacion
-Token 24: 8, Tipo: Numero Entero
-Token 27: @a, Tipo: Variable
-Token 28: =, Tipo: Asignacion
-Token 29: 123, Tipo: Numero Entero
-Token 32: @z, Tipo: Variable
-Token 33: =, Tipo: Asignacion
-Token 34: 12, Tipo: Numero Entero
-Token 35: (, Tipo: Aritmetico
-Token 36: 234, Tipo: Numero Entero
-Token 37: (, Tipo: Aritmetico
-Token 38: 23, Tipo: Numero Entero
-Token 39: (, Tipo: Aritmetico
-Token 40: 23, Tipo: Numero Entero
-Token 41: ), Tipo: Aritmetico
-Token 42: ), Tipo: Aritmetico
-Token 43: ), Tipo: Aritmetico
-Token 45: @z, Tipo: Variable
-Token 46: =, Tipo: Asignacion
-Token 47: @x, Tipo: Variable
-Token 48: +, Tipo: Aritmetico
-Token 49: @y, Tipo: Variable
+=== ANALISIS LEXICO ===
+
+[Linea 1] Token: int, Tipo: Palabra Reservada
+[Linea 1] Token: @a, Tipo: Variable
+[Linea 1] Token: int, Tipo: Palabra Reservada
+[Linea 1] Token: @b, Tipo: Variable
+[Linea 1] Token: int, Tipo: Palabra Reservada
+[Linea 1] Token: @c, Tipo: Variable
+[Linea 1] Token: @a, Tipo: Variable
+[Linea 1] Token: =, Tipo: Asignacion
+[Linea 1] Token: 5, Tipo: Numero Entero
+
+[Linea 2] Token: @b, Tipo: Variable
+[Linea 2] Token: =, Tipo: Asignacion
+[Linea 2] Token: 3, Tipo: Numero Entero
+[Linea 2] Token: @c, Tipo: Variable
+[Linea 2] Token: =, Tipo: Asignacion
+[Linea 2] Token: @a, Tipo: Variable
+[Linea 2] Token: +, Tipo: Aritmetico
+[Linea 2] Token: @b, Tipo: Variable
+
+[Linea 3] Token: @c, Tipo: Variable
+[Linea 3] Token: =, Tipo: Asignacion
+[Linea 3] Token: @a, Tipo: Variable
+[Linea 3] Token: *, Tipo: Aritmetico
+[Linea 3] Token: @b, Tipo: Variable
+
+[Linea 4] Token: @c, Tipo: Variable
+[Linea 4] Token: =, Tipo: Asignacion
+[Linea 4] Token: (, Tipo: Aritmetico
+[Linea 4] Token: @a, Tipo: Variable
+[Linea 4] Token: +, Tipo: Aritmetico
+[Linea 4] Token: @b, Tipo: Variable
+[Linea 4] Token: ), Tipo: Aritmetico
+[Linea 4] Token: *, Tipo: Aritmetico
+[Linea 4] Token: 2, Tipo: Numero Entero
+
 
 Analisis Sintactico:
 === ANALISIS SINTACTICO ===
 
-[Linea 1] Declaracion de variable INT: int
-[Linea 2] Declaracion de variable INT: int
-[Linea 3] Declaracion de variable INT: int
-[Linea 4] Declaracion de variable INT: int
-[Linea 5] Asignacion: @x = 10
-[Linea 6] Asignacion: @y = 8
-[Linea 7] Asignacion: @a = 123
-[Linea 8] Asignacion con expresion anidada: @z = 12(234(23(23)))
-[Linea 9] Asignacion con operacion aritmetica: @z = @x + @y
+=== Analisis de Lineas ===
 
-Errores encontrados:
-[Linea 8] Error: Falta punto y coma al final de la linea
-[Linea 8] Error: Falta punto y coma al final de la expresion anidada
+[Linea 1] Declaracion de variable INT: @a
+[Linea 2] Declaracion de variable INT: @b
+[Linea 3] Declaracion de variable INT: @c
+[Linea 4] Asignacion: @a = 5
+[Linea 5] Asignacion: @b = 3
+[Linea 6] Asignacion con operacion aritmetica: @c = @a + @b
+[Linea 7] Asignacion con operacion aritmetica: @c = @a * @b
+[Linea 8] Asignacion con expresion anidada: @c = (@a + @b) * 2
+
+=== Errores de Punto y Coma ===
+Error: Falta punto y coma en la línea 1
+Error: Falta punto y coma en la línea 2
+Error: Falta punto y coma en la línea 3
+Error: Falta punto y coma en la línea 5
+
+=== Errores Encontrados ===
 
 Analisis sintactico completado con errores.
 
 Arbol 1:
 declaracion
   tipo: int
-  variable: @x
+  variable: @a
 
 Arbol 2:
 declaracion
   tipo: int
-  variable: @y
+  variable: @b
 
 Arbol 3:
 declaracion
   tipo: int
-  variable: @z
-
-Arbol 4:
-declaracion
-  tipo: int
-  variable: @a
-
-Arbol 5:
-asignacion
-  variable: @x
-  operador: =
-  valor: 10
-
-Arbol 6:
-asignacion
-  variable: @y
-  operador: =
-  valor: 8
-
-Arbol 7:
-asignacion
-  variable: @a
-  operador: =
-  valor: 123
-
-Arbol 8:
-asignacion
-  variable: @z
-  operador: =
-  valor: 12
-  operacion aritmetica: (
-  valor: 234
-
-Arbol 9:
-asignacion
-  variable: @z
-  operador: =
-  valor: @x
-  operacion aritmetica: +
-  valor: @y
+  variable: @c

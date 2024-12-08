@@ -63,13 +63,17 @@ def PreprocesarArchivo(ruta1,ruta2):
 
         #Abrir el archivo de salida para escritura
         with open(ruta2, 'w') as archivo_salida:
-                for linea in lineas_procesadas:
+            # Escribir todas las líneas excepto la última sin salto de línea adicional
+            for i, linea in enumerate(lineas_procesadas):
+                if i == len(lineas_procesadas) - 1:
+                    archivo_salida.write(linea)  # Última línea sin \n
+                else:
                     archivo_salida.write(linea + '\n')
+                    
     except FileNotFoundError:
         print(f"Error: El archivo {ruta1} no existe.")
-
     except Exception as e:
-        print(f"Valio burger {e}")
+        print(f"Error: {e}")
 
 
 #Funcion de Recorrer el Archivo .txt

@@ -19,31 +19,43 @@ DELIMITADORES = {'(': 'Paréntesis Izquierdo', ')': 'Paréntesis Derecho',
 def separar_tokens(linea):
     """
     Divide una línea de código en una lista de tokens.
-
-    Parámetros:
-        linea (str): Una línea de código fuente.
-
-    Retorna:
-        list: Lista de tokens separados.
     """
     tokens = []
     token = ""
-
-    # Agregamos los operadores aritméticos a los delimitadores
     delimitadores = list(DELIMITADORES.keys()) + ['+', '-', '*', '/', '%']
-
-    for caracter in linea:
-        if caracter in delimitadores:  # Detecta delimitadores dinámicamente
+    
+    i = 0
+    while i < len(linea):
+        caracter = linea[i]
+        
+        # Si es un delimitador
+        if caracter in delimitadores:
             if token:
                 tokens.append(token)
                 token = ""
             tokens.append(caracter)
+        # Si es un espacio
         elif caracter == " ":
             if token:
                 tokens.append(token)
                 token = ""
+        # Si es un número
+        elif caracter.isdigit():
+            if token:
+                token += caracter
+            else:
+                # Consumir todo el número
+                numero = caracter
+                j = i + 1
+                while j < len(linea) and linea[j].isdigit():
+                    numero += linea[j]
+                    j += 1
+                tokens.append(numero)
+                i = j - 1
         else:
             token += caracter
+        
+        i += 1
 
     if token:
         tokens.append(token)
@@ -65,26 +77,34 @@ VALIDADORES = {
 def analizar_codigo(codigo):
     """
     Analiza el código línea por línea, generando una lista de tokens clasificados.
-
-    Parámetros:
-        codigo (list): Lista de líneas de código fuente.
-
-    Retorna:
-        list: Lista de tuplas (token, tipo).
     """
     tokens = []
+    numero_linea = 1
+    
     for linea in codigo:
+        linea = linea.strip()
+        if not linea:  # Saltar líneas vacías
+            continue
+            
+        tokens_linea = []
         palabras = separar_tokens(linea)
+        
         for palabra in palabras:
             if palabra == ";":
                 tokens.append((palabra, "Punto y Coma"))
+            elif palabra in ["+", "-", "*", "/", "(", ")"]:
+                tokens.append((palabra, "Aritmetico"))
+            elif palabra == "=":
+                tokens.append((palabra, "Asignacion"))
+            elif validar_numero_entero(palabra):
+                tokens.append((palabra, "Numero Entero"))
+            elif validar_variable(palabra):
+                tokens.append((palabra, "Variable"))
+            elif validar_palabra_reservada(palabra):
+                tokens.append((palabra, "Palabra Reservada"))
             else:
-                for tipo, validador in VALIDADORES.items():
-                    if validador(palabra):
-                        tokens.append((palabra, tipo))
-                        break
-                else:
-                    tokens.append((palabra, 'Desconocido'))
+                tokens.append((palabra, "Desconocido"))
+    
     return tokens
 
 # Función principal
@@ -93,8 +113,8 @@ def main():
     Función principal: Preprocesa el archivo, analiza el código, y genera tokens clasificados.
     """
     # Preprocesamos el archivo y lo guardamos en codigo.txt
-    ruta_original = 'C:\\Users\\Omarius\\Desktop\\CUMBACK\\Pythonn\\miprograma.txt'
-    ruta_preprocesada = 'C:\\Users\\Omarius\\Desktop\\CUMBACK\\Pythonn\\codigo.txt'
+    ruta_original = 'miprograma.txt'
+    ruta_preprocesada = 'codigo.txt'
 
     PreprocesarArchivo(ruta_original, ruta_preprocesada)
     RecorrerArchivo(ruta_preprocesada)  # Esto guarda en codigo.txt
@@ -110,13 +130,14 @@ def main():
     with open('output.txt', 'w') as archivo_salida:
         sys.stdout = archivo_salida
         
-        print("Tokens Analizados:")
-        cont = 0
-        for token, tipo in tokens:
-            cont += 1
+        print("=== ANALISIS LEXICO ===\n")
+        linea_actual = 1
+        for i, (token, tipo) in enumerate(tokens, 1):
             if token not in ["\n", ";"]:
-            #if token != "\n":
-                print(f"Token {cont}: {token}, Tipo: {tipo}")
+                print(f"[Linea {linea_actual}] Token: {token}, Tipo: {tipo}")
+            if token == ";":
+                linea_actual += 1
+                print()
 
         print("\nAnalisis Sintactico:")
         analizador = AnalizadorSintactico(tokens)
