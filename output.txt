@@ -1,42 +1,87 @@
-int @x;
-int @y;
-int @z;
-int @a;
-@x=10;
-@y=8;
-@a=123;
-@z=12(234(23(23)))
-@z=@x+@y;
-Tokens Analizados:
-Token 1: int, Tipo: Palabra Reservada
-Token 2: @x, Tipo: Variable
-Token 5: int, Tipo: Palabra Reservada
-Token 6: @y, Tipo: Variable
-Token 9: int, Tipo: Palabra Reservada
-Token 10: @z, Tipo: Variable
-Token 13: int, Tipo: Palabra Reservada
-Token 14: @a, Tipo: Variable
-Token 17: @x, Tipo: Variable
-Token 18: =, Tipo: Asignación
-Token 19: 10, Tipo: Número Entero
-Token 22: @y, Tipo: Variable
-Token 23: =, Tipo: Asignación
-Token 24: 8, Tipo: Número Entero
-Token 27: @a, Tipo: Variable
-Token 28: =, Tipo: Asignación
-Token 29: 123, Tipo: Número Entero
-Token 32: @z, Tipo: Variable
-Token 33: =, Tipo: Asignación
-Token 34: 12, Tipo: Número Entero
-Token 35: (, Tipo: Aritmético
-Token 36: 234, Tipo: Número Entero
-Token 37: (, Tipo: Aritmético
-Token 38: 23, Tipo: Número Entero
-Token 39: (, Tipo: Aritmético
-Token 40: 23, Tipo: Número Entero
-Token 41: ), Tipo: Aritmético
-Token 42: ), Tipo: Aritmético
-Token 43: ), Tipo: Aritmético
-Token 45: @z, Tipo: Variable
-Token 46: =, Tipo: Asignación
-Token 47: @x+@y, Tipo: Desconocido
+=== ANALISIS LEXICO ===
+
+[Linea 1] Token: entero, Tipo: Palabra Reservada
+[Linea 1] Token: @a, Tipo: Variable
+
+[Linea 2] Token: entero, Tipo: Palabra Reservada
+[Linea 2] Token: @b, Tipo: Variable
+
+[Linea 3] Token: entero, Tipo: Palabra Reservada
+[Linea 3] Token: @c, Tipo: Variable
+
+[Linea 4] Token: @a, Tipo: Variable
+[Linea 4] Token: =, Tipo: Asignacion
+[Linea 4] Token: 5, Tipo: Numero Entero
+
+[Linea 5] Token: @b, Tipo: Variable
+[Linea 5] Token: =, Tipo: Asignacion
+[Linea 5] Token: 3, Tipo: Numero Entero
+
+[Linea 6] Token: @c, Tipo: Variable
+[Linea 6] Token: =, Tipo: Asignacion
+[Linea 6] Token: @a, Tipo: Variable
+[Linea 6] Token: +, Tipo: Aritmetico
+[Linea 6] Token: @b, Tipo: Variable
+
+[Linea 7] Token: @c, Tipo: Variable
+[Linea 7] Token: =, Tipo: Asignacion
+[Linea 7] Token: @a, Tipo: Variable
+[Linea 7] Token: *, Tipo: Aritmetico
+[Linea 7] Token: @b, Tipo: Variable
+
+
+Analisis Sintactico:
+=== ANALISIS SINTACTICO ===
+
+=== Analisis de Lineas ===
+
+[Linea 1] Declaracion de variable ENTERO: @a
+[Linea 2] Declaracion de variable ENTERO: @b
+[Linea 3] Declaracion de variable ENTERO: @c
+[Linea 4] Asignacion: ; = =
+[Linea 5] Asignacion: ; = =
+[Linea 6] Asignacion: @a = @b
+[Linea 7] Asignacion: @a = @b
+
+Analisis sintactico completado exitosamente.
+
+Arbol 1:
+declaracion
+  tipo: entero
+  variable: @a
+
+Arbol 2:
+declaracion
+  tipo: entero
+  variable: @b
+
+Arbol 3:
+declaracion
+  tipo: entero
+  variable: @c
+
+Arbol 4:
+asignacion
+  variable: @a
+  operador: =
+  expresion
+    valor: 5
+
+Arbol 5:
+asignacion
+  variable: @b
+  operador: =
+  expresion
+    valor: 3
+
+Arbol 6:
+asignacion
+  variable: @c
+  operador: =
+  expresion
+
+Arbol 7:
+asignacion
+  variable: @c
+  operador: =
+  expresion

@@ -1,17 +1,12 @@
 //Declaramos variables
 
-int @x;
-int @y;
-int @z;
-int @a;
+entero @a;
+entero @b;
+entero @c;
 
 //Inicializamos
 
-@x = 10;
-@y = 8;
-@a = 123;
-@z=12(234(23(23)))
-
-//Calculamos
-
-	@z = @x + @y;
+@a = 5;
+@b = 3;
+@c = @a + @b;
+@c = @a * @b;
