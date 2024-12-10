@@ -1,39 +1,33 @@
 === ANALISIS LEXICO ===
 
-[Linea 1] Token: int, Tipo: Palabra Reservada
+[Linea 1] Token: entero, Tipo: Palabra Reservada
 [Linea 1] Token: @a, Tipo: Variable
-[Linea 1] Token: int, Tipo: Palabra Reservada
-[Linea 1] Token: @b, Tipo: Variable
-[Linea 1] Token: int, Tipo: Palabra Reservada
-[Linea 1] Token: @c, Tipo: Variable
-[Linea 1] Token: @a, Tipo: Variable
-[Linea 1] Token: =, Tipo: Asignacion
-[Linea 1] Token: 5, Tipo: Numero Entero
 
-[Linea 2] Token: @b, Tipo: Variable
-[Linea 2] Token: =, Tipo: Asignacion
-[Linea 2] Token: 3, Tipo: Numero Entero
-[Linea 2] Token: @c, Tipo: Variable
-[Linea 2] Token: =, Tipo: Asignacion
-[Linea 2] Token: @a, Tipo: Variable
-[Linea 2] Token: +, Tipo: Aritmetico
+[Linea 2] Token: entero, Tipo: Palabra Reservada
 [Linea 2] Token: @b, Tipo: Variable
 
+[Linea 3] Token: entero, Tipo: Palabra Reservada
 [Linea 3] Token: @c, Tipo: Variable
-[Linea 3] Token: =, Tipo: Asignacion
-[Linea 3] Token: @a, Tipo: Variable
-[Linea 3] Token: *, Tipo: Aritmetico
-[Linea 3] Token: @b, Tipo: Variable
 
-[Linea 4] Token: @c, Tipo: Variable
-[Linea 4] Token: =, Tipo: Asignacion
-[Linea 4] Token: (, Tipo: Aritmetico
 [Linea 4] Token: @a, Tipo: Variable
-[Linea 4] Token: +, Tipo: Aritmetico
-[Linea 4] Token: @b, Tipo: Variable
-[Linea 4] Token: ), Tipo: Aritmetico
-[Linea 4] Token: *, Tipo: Aritmetico
-[Linea 4] Token: 2, Tipo: Numero Entero
+[Linea 4] Token: =, Tipo: Asignacion
+[Linea 4] Token: 5, Tipo: Numero Entero
+
+[Linea 5] Token: @b, Tipo: Variable
+[Linea 5] Token: =, Tipo: Asignacion
+[Linea 5] Token: 3, Tipo: Numero Entero
+
+[Linea 6] Token: @c, Tipo: Variable
+[Linea 6] Token: =, Tipo: Asignacion
+[Linea 6] Token: @a, Tipo: Variable
+[Linea 6] Token: +, Tipo: Aritmetico
+[Linea 6] Token: @b, Tipo: Variable
+
+[Linea 7] Token: @c, Tipo: Variable
+[Linea 7] Token: =, Tipo: Asignacion
+[Linea 7] Token: @a, Tipo: Variable
+[Linea 7] Token: *, Tipo: Aritmetico
+[Linea 7] Token: @b, Tipo: Variable
 
 
 Analisis Sintactico:
@@ -41,36 +35,53 @@ Analisis Sintactico:
 
 === Analisis de Lineas ===
 
-[Linea 1] Declaracion de variable INT: @a
-[Linea 2] Declaracion de variable INT: @b
-[Linea 3] Declaracion de variable INT: @c
-[Linea 4] Asignacion: @a = 5
-[Linea 5] Asignacion: @b = 3
-[Linea 6] Asignacion con operacion aritmetica: @c = @a + @b
-[Linea 7] Asignacion con operacion aritmetica: @c = @a * @b
-[Linea 8] Asignacion con expresion anidada: @c = (@a + @b) * 2
+[Linea 1] Declaracion de variable ENTERO: @a
+[Linea 2] Declaracion de variable ENTERO: @b
+[Linea 3] Declaracion de variable ENTERO: @c
+[Linea 4] Asignacion: ; = =
+[Linea 5] Asignacion: ; = =
+[Linea 6] Asignacion: @a = @b
+[Linea 7] Asignacion: @a = @b
 
-=== Errores de Punto y Coma ===
-Error: Falta punto y coma en la línea 1
-Error: Falta punto y coma en la línea 2
-Error: Falta punto y coma en la línea 3
-Error: Falta punto y coma en la línea 5
-
-=== Errores Encontrados ===
-
-Analisis sintactico completado con errores.
+Analisis sintactico completado exitosamente.
 
 Arbol 1:
 declaracion
-  tipo: int
+  tipo: entero
   variable: @a
 
 Arbol 2:
 declaracion
-  tipo: int
+  tipo: entero
   variable: @b
 
 Arbol 3:
 declaracion
-  tipo: int
+  tipo: entero
   variable: @c
+
+Arbol 4:
+asignacion
+  variable: @a
+  operador: =
+  expresion
+    valor: 5
+
+Arbol 5:
+asignacion
+  variable: @b
+  operador: =
+  expresion
+    valor: 3
+
+Arbol 6:
+asignacion
+  variable: @c
+  operador: =
+  expresion
+
+Arbol 7:
+asignacion
+  variable: @c
+  operador: =
+  expresion

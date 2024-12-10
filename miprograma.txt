@@ -1,13 +1,12 @@
 //Declaramos variables
 
-int @a
-int @b
-int @c
+entero @a;
+entero @b;
+entero @c;
 
 //Inicializamos
 
 @a = 5;
-@b = 3
+@b = 3;
 @c = @a + @b;
 @c = @a * @b;
-@c = (@a + @b) * 2;

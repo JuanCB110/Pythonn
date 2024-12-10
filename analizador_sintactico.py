@@ -64,63 +64,42 @@ class AnalizadorSintactico:
         return encontro_punto_coma
 
     def analizar(self):
-        arboles = []
+        arboles = []  # Aquí almacenaremos los árboles sintácticos
         mensajes = []
-        tipos_declaracion = ["INT", "REAL", "BOOLEAN", "CADENA", "CARACTER", "MATRIZ"]
-        
+        tipos_declaracion = ["ENTERO", "REAL", "BOOLEAN", "CADENA", "CARACTER", "MATRIZ"]
+
         print("=== ANALISIS SINTACTICO ===\n")
-        
+
         while self.posicion < len(self.tokens):
             token_actual = self.tokens[self.posicion]
-            
-            # Declaraciones
+
+            # Declaraciones de variables
             if token_actual.tipo == "Palabra Reservada" and token_actual.valor.upper() in tipos_declaracion:
                 if self.posicion + 1 < len(self.tokens):
                     variable = self.tokens[self.posicion + 1].valor
-                    arbol = self.crear_arbol_declaracion()
+                    arbol = self.crear_arbol_declaracion()  # Crear el árbol de declaración
                     arboles.append(arbol)
                     mensajes.append(f"[Linea {self.numero_linea}] Declaracion de variable {token_actual.valor.upper()}: {variable}")
-                    self.verificar_punto_coma()
+                    self.verificar_punto_coma()  # Verificar si termina en punto y coma
                     self.numero_linea += 1
-            
+
             # Asignaciones
             elif token_actual.tipo == "Variable":
                 if self.posicion + 1 < len(self.tokens) and self.tokens[self.posicion + 1].valor == "=":
-                    variable = token_actual.valor
-                    pos_temp = self.posicion
-                    
-                    # Buscar el final de la asignación
-                    while pos_temp < len(self.tokens):
-                        if self.tokens[pos_temp].valor == ";":
-                            break
-                        if pos_temp + 1 < len(self.tokens) and self.tokens[pos_temp + 1].tipo == "Variable" and not self.tokens[pos_temp].tipo in ["Aritmetico", "Asignacion"]:
-                            break
-                        pos_temp += 1
-                    
-                    tiene_parentesis = any(t.valor == "(" for t in self.tokens[self.posicion:pos_temp])
-                    tiene_operacion = any(t.tipo == "Aritmetico" and t.valor in ["+", "-", "*", "/"] for t in self.tokens[self.posicion:pos_temp])
-                    
-                    if tiene_parentesis:
-                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion con expresion anidada: {variable} = (@a + @b) * 2")
-                    elif tiene_operacion:
-                        valor1 = self.tokens[self.posicion + 2].valor
-                        operador = self.tokens[self.posicion + 3].valor
-                        valor2 = self.tokens[self.posicion + 4].valor
-                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion con operacion aritmetica: {variable} = {valor1} {operador} {valor2}")
-                    else:
-                        valor = self.tokens[self.posicion + 2].valor
-                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion: {variable} = {valor}")
-                    
-                    self.verificar_punto_coma()
+                    # Aquí estamos en una asignación, llamamos al método para crear el árbol de la asignación
+                    arbol = self.crear_arbol_asignacion()  # Crear el árbol para esta asignación
+                    arboles.append(arbol)
+                    mensajes.append(f"[Linea {self.numero_linea}] Asignacion: {self.tokens[self.posicion].valor} = {self.tokens[self.posicion + 2].valor}")
+                    self.verificar_punto_coma()  # Verificar si termina en punto y coma
                     self.numero_linea += 1
-            
-            self.posicion += 1
 
-        # Verificar la última línea si no termina en punto y coma
+            self.posicion += 1  # Avanzamos al siguiente token
+
+        # Verificar si la última línea termina en punto y coma
         if len(self.tokens) > 0 and self.tokens[-1].valor != ";":
-            self.lineas_sin_punto_coma.add(self.total_lineas)  # Usar el contador real de líneas
+            self.lineas_sin_punto_coma.add(self.total_lineas)  # Usamos el contador real de líneas
 
-        # Imprimir mensajes y errores
+        # Imprimir los mensajes y errores
         print("=== Analisis de Lineas ===\n")
         for mensaje in mensajes:
             print(mensaje)
@@ -128,7 +107,7 @@ class AnalizadorSintactico:
         if self.lineas_sin_punto_coma:
             print("\n=== Errores de Punto y Coma ===")
             for linea in sorted(self.lineas_sin_punto_coma):
-                print(f"Error: Falta punto y coma en la línea {linea}")
+                print(f"Error: Falta punto y coma en la linea {linea}")
 
         if self.errores or self.lineas_sin_punto_coma:
             print("\n=== Errores Encontrados ===")
@@ -137,8 +116,8 @@ class AnalizadorSintactico:
             print("\nAnalisis sintactico completado con errores.")
         else:
             print("\nAnalisis sintactico completado exitosamente.")
-    
-        return arboles
+
+        return arboles  # Devolvemos la lista de árboles sintácticos generados
 
     def crear_arbol_asignacion(self):
         raiz = Nodo("asignacion")
