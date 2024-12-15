@@ -86,10 +86,16 @@ class AnalizadorSintactico:
             # Asignaciones
             elif token_actual.tipo == "Variable":
                 if self.posicion + 1 < len(self.tokens) and self.tokens[self.posicion + 1].valor == "=":
-                    # Aquí estamos en una asignación, llamamos al método para crear el árbol de la asignación
-                    arbol = self.crear_arbol_asignacion()  # Crear el árbol para esta asignación
-                    arboles.append(arbol)
-                    mensajes.append(f"[Linea {self.numero_linea}] Asignacion: {self.tokens[self.posicion].valor} = {self.tokens[self.posicion + 2].valor}")
+                    # Verificar si hay suficientes tokens para la asignación
+                    if self.posicion + 2 < len(self.tokens):
+                        # Aquí estamos en una asignación, y tenemos los tokens suficientes para acceder
+                        mensajes.append(f"[Linea {self.numero_linea}] Asignacion: {self.tokens[self.posicion].valor} = {self.tokens[self.posicion + 2].valor}")
+                        arbol = self.crear_arbol_asignacion()  # Crear el árbol para esta asignación
+                        arboles.append(arbol)
+                    else:
+                        # Si no hay suficientes tokens para completar la asignación, registrar un error
+                        self.errores.append(f"[Linea {self.numero_linea}] Error en asignación: faltan tokens para completar la expresión.")
+                    
                     self.verificar_punto_coma()  # Verificar si termina en punto y coma
                     self.numero_linea += 1
 
@@ -119,24 +125,36 @@ class AnalizadorSintactico:
 
         return arboles  # Devolvemos la lista de árboles sintácticos generados
 
+
     def crear_arbol_asignacion(self):
         raiz = Nodo("asignacion")
-        raiz.agregar_hijo(Nodo("variable", self.tokens[self.posicion].valor))
+        raiz.agregar_hijo(Nodo("variable", self.tokens[self.posicion].valor))  # Agregar la variable
+
+        # Agregar el operador de asignación
         raiz.agregar_hijo(Nodo("operador", "="))
-        
-        # Crear nodo de expresión
+
+        # Crear el nodo de expresión
         expresion = Nodo("expresion")
         self.posicion += 2  # Saltar el operador de asignación
-        
-        # Analizar la expresión
+
+        # Analizar la expresión (izquierda y derecha de la asignación)
         while self.posicion < len(self.tokens):
             token = self.tokens[self.posicion]
+            
+            # Si encontramos un punto y coma, terminamos la expresión
             if token.valor == ";":
                 break
-            if token.tipo == "Variable" and self.posicion > 2:
-                break
-                
-            if token.valor == "(":
+            
+            # Si encontramos un operador aritmético, lo agregamos a la expresión
+            if token.tipo == "Aritmetico":
+                expresion.agregar_hijo(Nodo("operador", token.valor))
+            
+            # Si encontramos una variable o número, lo agregamos a la expresión
+            elif token.tipo in ["Variable", "Numero Entero"]:
+                expresion.agregar_hijo(Nodo("valor", token.valor))
+            
+            # Si encontramos un paréntesis, creamos un subárbol para esa expresión
+            elif token.valor == "(":
                 nodo_parentesis = Nodo("parentesis")
                 self.posicion += 1
                 while self.tokens[self.posicion].valor != ")":
@@ -146,13 +164,13 @@ class AnalizadorSintactico:
                         nodo_parentesis.agregar_hijo(Nodo("operador", self.tokens[self.posicion].valor))
                     self.posicion += 1
                 expresion.agregar_hijo(nodo_parentesis)
-            elif token.tipo in ["Variable", "Numero Entero"]:
-                expresion.agregar_hijo(Nodo("valor", token.valor))
-            elif token.tipo == "Aritmetico":
-                expresion.agregar_hijo(Nodo("operador", token.valor))
             
+            # Aseguramos que hemos procesado el operador o el valor
+            if token.valor != "(" and token.tipo not in ["Aritmetico", "Variable", "Numero Entero"]:
+                break
+
             self.posicion += 1
-            
+
         raiz.agregar_hijo(expresion)
         return raiz
 
