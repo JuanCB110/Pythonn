@@ -3,6 +3,7 @@
 entero @a;
 entero @b;
 entero @c;
+entero @d;
 
 //Inicializamos
 
@@ -10,3 +11,4 @@ entero @c;
 @b = 3;
 @c = @a + @b;
 @c = @a * @b;
+@d = 5 * 3;
