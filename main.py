@@ -41,7 +41,7 @@ def separar_tokens(linea):
                 tokens.append(token)
                 token = ""
         # Si es un número
-        elif caracter.isdigit() or (caracter == '.' and token.isdigit()):
+        elif caracter.isdigit():
             if token:
                 token += caracter
             else:
