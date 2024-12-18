@@ -1,11 +1,11 @@
 ALGORITMO
     ENTERO @a;
-    real @b;
+    ENTERO @b;
     @a = 5;
-    @b = 3.5;
-    SI @a > @b ENTONCES
-        @a = @a + @b;
+    @b = 10;
+    SI @a < @b ENTONCES
+        @a = @a + 1;
     SINO
-        @a = @a - @b;
+        @b = @b - 1;
     FIN_SI
 FIN_ALGORITMO

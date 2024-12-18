@@ -40,31 +40,22 @@ def separar_tokens(linea):
             if token:
                 tokens.append(token)
                 token = ""
-        # Si es un número
-        elif caracter.isdigit():
-            if token:
-                token += caracter
-            else:
-                # Consumir todo el número
-                numero = caracter
-                j = i + 1
-                while j < len(linea) and linea[j].isdigit():
-                    numero += linea[j]
-                    j += 1
-                tokens.append(numero)
-                i = j - 1
+        # Si es un número o un punto decimal
+        elif caracter.isdigit() or (caracter == '.' and token and token[-1].isdigit()):
+            token += caracter
+        # Si es una letra o un símbolo de variable
+        elif caracter.isalpha() or caracter == '@' or caracter == '_':
+            token += caracter
         else:
+            if token:
+                tokens.append(token)
+                token = ""
             token += caracter
         
         i += 1
 
     if token:
         tokens.append(token)
-
-    # Aquí es donde capturamos errores léxicos
-    for token in tokens:
-        if token not in VALIDADORES.keys() and not token.isdigit() and not token in delimitadores:
-            print(f"Error Léxico: El token '{token}' no es reconocido")
 
     return tokens
 

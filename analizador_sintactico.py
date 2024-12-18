@@ -111,7 +111,7 @@ class AnalizadorSintactico:
                 
                 # Procesar la condición
                 self.posicion += 1  # Saltar "SI"
-                while self.tokens[self.posicion].valor != "ENTONCES":
+                while self.posicion < len(self.tokens) and self.tokens[self.posicion].valor != "ENTONCES":
                     # Agregar los tokens de la condición al nodo
                     condicion.agregar_hijo(Nodo(self.tokens[self.posicion].tipo, self.tokens[self.posicion].valor))
                     self.posicion += 1
@@ -119,22 +119,22 @@ class AnalizadorSintactico:
 
                 # Procesar el bloque verdadero
                 self.posicion += 1  # Saltar "ENTONCES"
-                while self.tokens[self.posicion].valor != "SINO" and self.tokens[self.posicion].valor != "FIN_SI":
+                while self.posicion < len(self.tokens) and self.tokens[self.posicion].valor != "SINO" and self.tokens[self.posicion].valor != "FIN_SI":
                     bloque_verdadero.agregar_hijo(self.crear_arbol_asignacion())  # Por ejemplo, si hay asignaciones
                     self.posicion += 1
                 arbol.agregar_hijo(bloque_verdadero)
 
                 # Procesar el bloque falso
-                if self.tokens[self.posicion].valor == "SINO":
+                if self.posicion < len(self.tokens) and self.tokens[self.posicion].valor == "SINO":
                     self.posicion += 1  # Saltar "SINO"
-                    while self.tokens[self.posicion].valor != "FIN_SI":
+                    while self.posicion < len(self.tokens) and self.tokens[self.posicion].valor != "FIN_SI":
                         bloque_falso.agregar_hijo(self.crear_arbol_asignacion())
                         self.posicion += 1
                     arbol.agregar_hijo(bloque_falso)
 
-                self.posicion += 1  # Saltar "FIN_SI"
+                if self.posicion < len(self.tokens):
+                    self.posicion += 1  # Saltar "FIN_SI"
                 arboles.append(arbol)
-
 
             self.posicion += 1  # Avanzamos al siguiente token
 
@@ -144,7 +144,6 @@ class AnalizadorSintactico:
             # Excluir palabras claves que no requieren punto y coma
             if ultimo_token.valor not in ["FIN_ALGORITMO", "FIN_SI"]:
                 self.lineas_sin_punto_coma.add(self.total_lineas)  # Usamos el contador real de líneas
-
 
         # Imprimir los mensajes y errores
         print("=== Analisis de Lineas ===\n")

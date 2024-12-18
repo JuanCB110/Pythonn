@@ -26,8 +26,8 @@ def validar_numero_decimal(cadena: str) -> bool:
         else:
             estado = tabla_estados[estado][3]  # Transición por cualquier otro carácter no válido
 
-    # El estado de aceptación es el 5 (números válidos con decimales)
-    return estado == 5 or estado == 2  # Aceptamos también el estado 2 para números enteros
+    # El estado de aceptación es el 4 (números válidos con decimales)
+    return estado == 4
 
 # Ejemplos de uso
 # print(validar_numero_decimal("123.45"))  # True

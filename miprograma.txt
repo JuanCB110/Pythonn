@@ -1,14 +1,8 @@
-//Declaramos variables
-
-real @a;
-entero @b;
-entero @c;
-entero @d;
-
-//Inicializamos
-
-@a = 5.34;
-@b = 3;
-@c = @a + @b;
-@c = @a * @b;
-@d = (5 + (5 * 6));
+ALGORITMO
+    ENTERO @x;
+    REAL @y;
+    @x = 10;
+    @y = 2.5;
+    @x = @x * 2;
+    @y = @y / 2;
+FIN_ALGORITMO

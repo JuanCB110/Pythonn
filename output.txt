@@ -4,7 +4,7 @@
 [Linea 1] Token: ENTERO, Tipo: Palabra Reservada
 [Linea 1] Token: @a, Tipo: Variable
 
-[Linea 2] Token: real, Tipo: Palabra Reservada
+[Linea 2] Token: ENTERO, Tipo: Palabra Reservada
 [Linea 2] Token: @b, Tipo: Variable
 
 [Linea 3] Token: @a, Tipo: Variable
@@ -13,26 +13,25 @@
 
 [Linea 4] Token: @b, Tipo: Variable
 [Linea 4] Token: =, Tipo: Asignacion
-[Linea 4] Token: 3, Tipo: Numero Entero
-[Linea 4] Token: .5, Tipo: Desconocido
+[Linea 4] Token: 10, Tipo: Numero Entero
 
 [Linea 5] Token: SI, Tipo: Palabra Reservada
 [Linea 5] Token: @a, Tipo: Variable
-[Linea 5] Token: >, Tipo: Operador Relacional
+[Linea 5] Token: <, Tipo: Operador Relacional
 [Linea 5] Token: @b, Tipo: Variable
 [Linea 5] Token: ENTONCES, Tipo: Palabra Reservada
 [Linea 5] Token: @a, Tipo: Variable
 [Linea 5] Token: =, Tipo: Asignacion
 [Linea 5] Token: @a, Tipo: Variable
 [Linea 5] Token: +, Tipo: Aritmetico
-[Linea 5] Token: @b, Tipo: Variable
+[Linea 5] Token: 1, Tipo: Numero Entero
 
 [Linea 6] Token: SINO, Tipo: Palabra Reservada
-[Linea 6] Token: @a, Tipo: Variable
-[Linea 6] Token: =, Tipo: Asignacion
-[Linea 6] Token: @a, Tipo: Variable
-[Linea 6] Token: -, Tipo: Aritmetico
 [Linea 6] Token: @b, Tipo: Variable
+[Linea 6] Token: =, Tipo: Asignacion
+[Linea 6] Token: @b, Tipo: Variable
+[Linea 6] Token: -, Tipo: Aritmetico
+[Linea 6] Token: 1, Tipo: Numero Entero
 
 [Linea 7] Token: FIN_SI, Tipo: Palabra Reservada
 [Linea 7] Token: FIN_ALGORITMO, Tipo: Palabra Reservada
@@ -43,9 +42,9 @@ Analisis Sintactico:
 === Analisis de Lineas ===
 
 [Linea 1] Declaracion de variable ENTERO: @a
-[Linea 2] Declaracion de variable REAL: @b
+[Linea 2] Declaracion de variable ENTERO: @b
 [Linea 3] Asignacion: @a = 5
-[Linea 4] Asignacion: @b = 3
+[Linea 4] Asignacion: @b = 10
 
 Analisis sintactico completado exitosamente.
 
@@ -56,7 +55,7 @@ declaracion
 
 Arbol 2:
 declaracion
-  tipo: real
+  tipo: ENTERO
   variable: @b
 
 Arbol 3:
@@ -71,13 +70,13 @@ asignacion
   variable: @b
   operador: =
   expresion
-    valor: 3
+    valor: 10
 
 Arbol 5:
 condicional
   condicion
     Variable: @a
-    Operador Relacional: >
+    Operador Relacional: <
     Variable: @b
   bloque_verdadero
     asignacion
@@ -86,12 +85,12 @@ condicional
       expresion
         valor: @a
         operador: +
-        valor: @b
+        valor: 1
   bloque_falso
     asignacion
-      variable: @a
+      variable: @b
       operador: =
       expresion
-        valor: @a
-        operador: -
         valor: @b
+        operador: -
+        valor: 1
