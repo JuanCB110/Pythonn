@@ -59,7 +59,10 @@ class AnalizadorSintactico:
         
         # Si no encontramos punto y coma, agregar la línea actual a las líneas con error
         if not encontro_punto_coma:
-            self.lineas_sin_punto_coma.add(self.numero_linea)
+            token_actual = self.tokens[self.posicion]
+            # Excluir palabras clave que no requieren punto y coma
+            if token_actual.valor != "FIN_ALGORITMO" and token_actual.valor != "FIN_SI":
+                self.lineas_sin_punto_coma.add(self.numero_linea)
         
         return encontro_punto_coma
 
@@ -99,11 +102,49 @@ class AnalizadorSintactico:
                     self.verificar_punto_coma()  # Verificar si termina en punto y coma
                     self.numero_linea += 1
 
+            # Relacionales
+            elif token_actual.tipo == "Palabra Reservada" and token_actual.valor == "SI":
+                arbol = Nodo("condicional")
+                condicion = Nodo("condicion")
+                bloque_verdadero = Nodo("bloque_verdadero")
+                bloque_falso = Nodo("bloque_falso")
+                
+                # Procesar la condición
+                self.posicion += 1  # Saltar "SI"
+                while self.tokens[self.posicion].valor != "ENTONCES":
+                    # Agregar los tokens de la condición al nodo
+                    condicion.agregar_hijo(Nodo(self.tokens[self.posicion].tipo, self.tokens[self.posicion].valor))
+                    self.posicion += 1
+                arbol.agregar_hijo(condicion)
+
+                # Procesar el bloque verdadero
+                self.posicion += 1  # Saltar "ENTONCES"
+                while self.tokens[self.posicion].valor != "SINO" and self.tokens[self.posicion].valor != "FIN_SI":
+                    bloque_verdadero.agregar_hijo(self.crear_arbol_asignacion())  # Por ejemplo, si hay asignaciones
+                    self.posicion += 1
+                arbol.agregar_hijo(bloque_verdadero)
+
+                # Procesar el bloque falso
+                if self.tokens[self.posicion].valor == "SINO":
+                    self.posicion += 1  # Saltar "SINO"
+                    while self.tokens[self.posicion].valor != "FIN_SI":
+                        bloque_falso.agregar_hijo(self.crear_arbol_asignacion())
+                        self.posicion += 1
+                    arbol.agregar_hijo(bloque_falso)
+
+                self.posicion += 1  # Saltar "FIN_SI"
+                arboles.append(arbol)
+
+
             self.posicion += 1  # Avanzamos al siguiente token
 
         # Verificar si la última línea termina en punto y coma
         if len(self.tokens) > 0 and self.tokens[-1].valor != ";":
-            self.lineas_sin_punto_coma.add(self.total_lineas)  # Usamos el contador real de líneas
+            ultimo_token = self.tokens[-1]
+            # Excluir palabras claves que no requieren punto y coma
+            if ultimo_token.valor not in ["FIN_ALGORITMO", "FIN_SI"]:
+                self.lineas_sin_punto_coma.add(self.total_lineas)  # Usamos el contador real de líneas
+
 
         # Imprimir los mensajes y errores
         print("=== Analisis de Lineas ===\n")

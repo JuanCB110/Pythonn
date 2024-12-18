@@ -1,14 +1,14 @@
 //Declaramos variables
 
-entero @a;
+real @a;
 entero @b;
 entero @c;
 entero @d;
 
 //Inicializamos
 
-@a = 5;
+@a = 5.34;
 @b = 3;
 @c = @a + @b;
 @c = @a * @b;
-@d = 5 * 3;
+@d = (5 + (5 * 6));

@@ -5,6 +5,7 @@ from Automatas.AOperadorLogico import validar_operador_logico
 from Automatas.AVariables import validar_variable
 from Automatas.AAsignacion import validar_operador_asignacion
 from Automatas.AAritmeticos import validar_operador_aritmetico
+from Automatas.ARelacionales import validar_operador_relacional
 from Tarea1 import PreprocesarArchivo, RecorrerArchivo
 import sys
 import os
@@ -15,7 +16,7 @@ from analizador_sintactico import AnalizadorSintactico
 DELIMITADORES = {'(': 'Paréntesis Izquierdo', ')': 'Paréntesis Derecho',
                 ';': 'Punto y Coma', '=': 'Operador de Asignación'}
 
-# Función para dividir una línea de código en tokens
+# Agregar al final de la función de separar_tokens
 def separar_tokens(linea):
     """
     Divide una línea de código en una lista de tokens.
@@ -40,7 +41,7 @@ def separar_tokens(linea):
                 tokens.append(token)
                 token = ""
         # Si es un número
-        elif caracter.isdigit():
+        elif caracter.isdigit() or (caracter == '.' and token.isdigit()):
             if token:
                 token += caracter
             else:
@@ -60,7 +61,13 @@ def separar_tokens(linea):
     if token:
         tokens.append(token)
 
+    # Aquí es donde capturamos errores léxicos
+    for token in tokens:
+        if token not in VALIDADORES.keys() and not token.isdigit() and not token in delimitadores:
+            print(f"Error Léxico: El token '{token}' no es reconocido")
+
     return tokens
+
 
 # Diccionario de validadores
 VALIDADORES = {
@@ -70,7 +77,8 @@ VALIDADORES = {
     'Operador Logico': validar_operador_logico,
     'Variable': validar_variable,
     'Asignacion': validar_operador_asignacion,
-    'Aritmetico': validar_operador_aritmetico
+    'Aritmetico': validar_operador_aritmetico,
+    'Operador Relacional' : validar_operador_relacional
 }
 
 # Función para analizar el código
@@ -80,32 +88,37 @@ def analizar_codigo(codigo):
     """
     tokens = []
     numero_linea = 1
-    
+
     for linea in codigo:
         linea = linea.strip()
         if not linea:  # Saltar líneas vacías
             continue
-            
-        tokens_linea = []
+
         palabras = separar_tokens(linea)
-        
+
         for palabra in palabras:
-            if palabra == ";":
-                tokens.append((palabra, "Punto y Coma"))
-            elif palabra in ["+", "-", "*", "/", "(", ")"]:
-                tokens.append((palabra, "Aritmetico"))
-            elif palabra == "=":
-                tokens.append((palabra, "Asignacion"))
-            elif validar_numero_entero(palabra):
-                tokens.append((palabra, "Numero Entero"))
-            elif validar_variable(palabra):
-                tokens.append((palabra, "Variable"))
-            elif validar_palabra_reservada(palabra):
-                tokens.append((palabra, "Palabra Reservada"))
-            else:
-                tokens.append((palabra, "Desconocido"))
-    
+            match palabra:
+                case ";":
+                    tokens.append((palabra, "Punto y Coma"))
+                case "+" | "-" | "*" | "/" | "(" | ")":
+                    tokens.append((palabra, "Aritmetico"))
+                case "=":
+                    tokens.append((palabra, "Asignacion"))
+                case _ if validar_numero_entero(palabra):
+                    tokens.append((palabra, "Numero Entero"))
+                case _ if validar_numero_decimal(palabra):
+                    tokens.append((palabra, "Numero Decimal"))
+                case _ if validar_variable(palabra):
+                    tokens.append((palabra, "Variable"))
+                case _ if validar_palabra_reservada(palabra):
+                    tokens.append((palabra, "Palabra Reservada"))
+                case _ if validar_operador_relacional(palabra):
+                    tokens.append((palabra, "Operador Relacional"))
+                case _:
+                    tokens.append((palabra, "Desconocido"))
+
     return tokens
+
 
 # Función principal
 def main():
@@ -113,7 +126,7 @@ def main():
     Función principal: Preprocesa el archivo, analiza el código, y genera tokens clasificados.
     """
     # Preprocesamos el archivo y lo guardamos en codigo.txt
-    ruta_original = 'miprograma.txt'
+    ruta_original = 'complicado.txt'
     ruta_preprocesada = 'codigo.txt'
 
     PreprocesarArchivo(ruta_original, ruta_preprocesada)

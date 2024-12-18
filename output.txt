@@ -1,0 +1,97 @@
+=== ANALISIS LEXICO ===
+
+[Linea 1] Token: ALGORITMO, Tipo: Palabra Reservada
+[Linea 1] Token: ENTERO, Tipo: Palabra Reservada
+[Linea 1] Token: @a, Tipo: Variable
+
+[Linea 2] Token: real, Tipo: Palabra Reservada
+[Linea 2] Token: @b, Tipo: Variable
+
+[Linea 3] Token: @a, Tipo: Variable
+[Linea 3] Token: =, Tipo: Asignacion
+[Linea 3] Token: 5, Tipo: Numero Entero
+
+[Linea 4] Token: @b, Tipo: Variable
+[Linea 4] Token: =, Tipo: Asignacion
+[Linea 4] Token: 3, Tipo: Numero Entero
+[Linea 4] Token: .5, Tipo: Desconocido
+
+[Linea 5] Token: SI, Tipo: Palabra Reservada
+[Linea 5] Token: @a, Tipo: Variable
+[Linea 5] Token: >, Tipo: Operador Relacional
+[Linea 5] Token: @b, Tipo: Variable
+[Linea 5] Token: ENTONCES, Tipo: Palabra Reservada
+[Linea 5] Token: @a, Tipo: Variable
+[Linea 5] Token: =, Tipo: Asignacion
+[Linea 5] Token: @a, Tipo: Variable
+[Linea 5] Token: +, Tipo: Aritmetico
+[Linea 5] Token: @b, Tipo: Variable
+
+[Linea 6] Token: SINO, Tipo: Palabra Reservada
+[Linea 6] Token: @a, Tipo: Variable
+[Linea 6] Token: =, Tipo: Asignacion
+[Linea 6] Token: @a, Tipo: Variable
+[Linea 6] Token: -, Tipo: Aritmetico
+[Linea 6] Token: @b, Tipo: Variable
+
+[Linea 7] Token: FIN_SI, Tipo: Palabra Reservada
+[Linea 7] Token: FIN_ALGORITMO, Tipo: Palabra Reservada
+
+Analisis Sintactico:
+=== ANALISIS SINTACTICO ===
+
+=== Analisis de Lineas ===
+
+[Linea 1] Declaracion de variable ENTERO: @a
+[Linea 2] Declaracion de variable REAL: @b
+[Linea 3] Asignacion: @a = 5
+[Linea 4] Asignacion: @b = 3
+
+Analisis sintactico completado exitosamente.
+
+Arbol 1:
+declaracion
+  tipo: ENTERO
+  variable: @a
+
+Arbol 2:
+declaracion
+  tipo: real
+  variable: @b
+
+Arbol 3:
+asignacion
+  variable: @a
+  operador: =
+  expresion
+    valor: 5
+
+Arbol 4:
+asignacion
+  variable: @b
+  operador: =
+  expresion
+    valor: 3
+
+Arbol 5:
+condicional
+  condicion
+    Variable: @a
+    Operador Relacional: >
+    Variable: @b
+  bloque_verdadero
+    asignacion
+      variable: @a
+      operador: =
+      expresion
+        valor: @a
+        operador: +
+        valor: @b
+  bloque_falso
+    asignacion
+      variable: @a
+      operador: =
+      expresion
+        valor: @a
+        operador: -
+        valor: @b
